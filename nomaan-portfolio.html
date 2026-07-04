@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomaan Killedar — root@portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080b10;
+    --bg-raised:#0e131a;
+    --line:#1c2530;
+    --cyan:#4df3ff;
+    --magenta:#ff3d81;
+    --text:#d9e4ea;
+    --muted:#5f7382;
+    --amber:#ffb454;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(77,243,255,0.08), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(255,61,129,0.06), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  /* subtle scanline texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    z-index:1;
+  }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:64px 24px 120px;
+    position:relative;
+    z-index:2;
+  }
+
+  /* ---------- NAV / PATH BAR ---------- */
+  .pathbar{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+    margin-bottom:56px;
+  }
+  .dot-row{ display:flex; gap:6px; margin-right:6px; }
+  .dot{ width:10px; height:10px; border-radius:50%; opacity:0.85; }
+  .dot.r{background:#ff5f57;} .dot.y{background:#febc2e;} .dot.g{background:#28c840;}
+
+  /* ---------- HERO TERMINAL ---------- */
+  .terminal{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    box-shadow:0 0 0 1px rgba(77,243,255,0.03), 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 80px -30px rgba(77,243,255,0.15);
+    overflow:hidden;
+  }
+  .terminal-head{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 18px;
+    background:linear-gradient(180deg, #12181f, #0e131a);
+    border-bottom:1px solid var(--line);
+  }
+  .terminal-title{
+    flex:1; text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--muted);
+  }
+  .terminal-body{
+    padding:32px clamp(20px, 4vw, 44px) 38px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:clamp(13px, 1.6vw, 15.5px);
+    line-height:1.9;
+  }
+  .prompt{ color:var(--cyan); }
+  .prompt .sep{ color:var(--muted); }
+  .cmd{ color:var(--text); }
+  .caret{
+    display:inline-block; width:8px; height:1em; background:var(--cyan);
+    vertical-align:-2px; margin-left:2px;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .whoami-out{ margin:14px 0 6px 0; }
+  .name-line{
+    font-size:clamp(28px, 5.5vw, 46px);
+    font-weight:800;
+    letter-spacing:-0.01em;
+    background:linear-gradient(90deg, #eafdff, var(--cyan) 60%, #7ef9ff);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    line-height:1.15;
+    margin-bottom:4px;
+  }
+  .role-line{
+    color:var(--muted);
+    font-size:clamp(13px,1.8vw,16px);
+  }
+  .role-line .tag{
+    color:var(--magenta);
+  }
+
+  .fade-in{
+    opacity:0; transform:translateY(8px);
+    animation:rise 0.6s ease forwards;
+  }
+
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ margin-top:88px; }
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:30px;
+  }
+  .section-head .path{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--cyan);
+    font-size:13px;
+  }
+  .section-head h2{
+    font-family:'JetBrains Mono', monospace;
+    font-size:clamp(20px,3vw,26px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .section-head .rule{
+    flex:1; height:1px;
+    background:linear-gradient(90deg, var(--line), transparent);
+  }
+
+  /* ---------- SKILLS: ls -la style listing ---------- */
+  .listing{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .listing-head{
+    display:grid;
+    grid-template-columns: 90px 1fr 140px;
+    padding:14px 22px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+  }
+  .skill-row{
+    display:grid;
+    grid-template-columns: 90px 1fr 140px;
+    align-items:center;
+    padding:18px 22px;
+    border-bottom:1px solid var(--line);
+    transition:background 0.2s ease;
+  }
+  .skill-row:last-child{ border-bottom:none; }
+  .skill-row:hover{ background:rgba(77,243,255,0.04); }
+
+  .skill-perm{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .skill-perm .rwx{ color:var(--cyan); }
+
+  .skill-name{
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .skill-name .title{
+    font-weight:600; font-size:15.5px;
+    color:var(--text);
+  }
+  .skill-name .desc{
+    font-size:13px; color:var(--muted);
+  }
+
+  .skill-bar-wrap{
+    display:flex; align-items:center; gap:10px; justify-self:end;
+  }
+  .skill-bar{
+    width:80px; height:6px; border-radius:3px;
+    background:#141b23;
+    overflow:hidden;
+    position:relative;
+  }
+  .skill-bar i{
+    display:block; height:100%; border-radius:3px;
+    background:linear-gradient(90deg, var(--cyan), #7ef9ff);
+    width:0;
+    animation:fillbar 1.4s ease forwards;
+    animation-delay:0.3s;
+  }
+  @keyframes fillbar{ to{ width: var(--pct); } }
+  .skill-pct{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--cyan); width:34px; }
+
+  /* ---------- UPCOMING: install progress ---------- */
+  .install-card{
+    background:var(--bg-raised);
+    border:1px solid rgba(255,61,129,0.25);
+    border-radius:10px;
+    padding:30px clamp(20px,4vw,36px);
+    position:relative;
+    overflow:hidden;
+  }
+  .install-card::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 400px 200px at 90% 0%, rgba(255,61,129,0.10), transparent);
+    pointer-events:none;
+  }
+  .install-top{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:18px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .install-label{
+    color:var(--magenta);
+    font-size:13px;
+    letter-spacing:0.04em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pulse{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--magenta);
+    box-shadow:0 0 0 0 rgba(255,61,129,0.6);
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(255,61,129,0.5); }
+    70%{ box-shadow:0 0 0 10px rgba(255,61,129,0); }
+    100%{ box-shadow:0 0 0 0 rgba(255,61,129,0); }
+  }
+  .install-pct{ color:var(--muted); font-size:12.5px; }
+
+  .install-title{
+    font-size:clamp(20px,3vw,26px);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .install-desc{
+    color:var(--muted);
+    font-size:14.5px;
+    max-width:520px;
+    margin-bottom:22px;
+    line-height:1.7;
+  }
+  .progress-track{
+    width:100%; height:10px; border-radius:6px;
+    background:#141019;
+    overflow:hidden;
+    margin-bottom:10px;
+  }
+  .progress-fill{
+    height:100%; border-radius:6px;
+    width:0%;
+    background:linear-gradient(90deg, var(--magenta), var(--amber));
+    animation:loadbar 2.2s ease forwards;
+    animation-delay:0.4s;
+    box-shadow:0 0 14px rgba(255,61,129,0.5);
+  }
+  @keyframes loadbar{ to{ width:37%; } }
+  .install-meta{
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  .modules{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:22px;
+  }
+  .module-chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:6px 12px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .module-chip.active{
+    color:var(--amber);
+    border-color:rgba(255,180,84,0.3);
+    background:rgba(255,180,84,0.06);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:100px;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    border-top:1px solid var(--line);
+    padding-top:28px;
+  }
+  footer .prompt{ color:var(--cyan); }
+
+  @media (max-width:640px){
+    .listing-head{ grid-template-columns:60px 1fr 90px; padding:12px 14px; }
+    .skill-row{ grid-template-columns:60px 1fr 90px; padding:16px 14px; }
+    .skill-bar{ width:52px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="pathbar">
+    <div class="dot-row">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    </div>
+    <span>~/nomaan-killedar</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="terminal">
+    <div class="terminal-head">
+      <div class="terminal-title">bash — 100×32</div>
+    </div>
+    <div class="terminal-body">
+      <div><span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span> <span class="cmd">whoami</span></div>
+      <div class="whoami-out fade-in" style="animation-delay:0.3s;">
+        <div class="name-line">Nomaan Killedar</div>
+        <div class="role-line">Coder <span class="tag">//</span> Windows Systems Master <span class="tag">//</span> Linux-Literate Builder</div>
+      </div>
+      <div class="fade-in" style="animation-delay:0.7s; margin-top:22px;">
+        <span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span> <span class="cmd">cat mission.txt</span>
+      </div>
+      <div class="fade-in" style="animation-delay:1s; color:var(--muted); margin-top:6px; max-width:560px;">
+        Building things with Python and the web — comfortable driving Windows deep under the hood,
+        and fluent enough in Linux to make it obey. Currently arming up for the cybersecurity frontier.
+      </div>
+      <div class="fade-in" style="animation-delay:1.3s; margin-top:22px;">
+        <span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span><span class="caret"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="path">~/skills$</span>
+      <h2>ls -la ./skills</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="listing">
+      <div class="listing-head">
+        <span>perms</span><span>name</span><span style="text-align:right;">level</span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>r-xr-x</span>
+        <span class="skill-name">
+          <span class="title">Python</span>
+          <span class="desc">Scripts, automation, backend logic</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:88%;"></i></span>
+          <span class="skill-pct">88%</span>
+        </span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>r-xr-x</span>
+        <span class="skill-name">
+          <span class="title">Web Development</span>
+          <span class="desc">Building and shipping websites end-to-end</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:85%;"></i></span>
+          <span class="skill-pct">85%</span>
+        </span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>r-xr-x</span>
+        <span class="skill-name">
+          <span class="title">HTML</span>
+          <span class="desc">Clean, structured markup as second nature</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:92%;"></i></span>
+          <span class="skill-pct">92%</span>
+        </span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>r-xr-x</span>
+        <span class="skill-name">
+          <span class="title">Coding</span>
+          <span class="desc">Problem-solving translated into working code</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:87%;"></i></span>
+          <span class="skill-pct">87%</span>
+        </span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>rwxr-x</span>
+        <span class="skill-name">
+          <span class="title">Windows Systems</span>
+          <span class="desc">Master-level command of the OS internals</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:95%;"></i></span>
+          <span class="skill-pct">95%</span>
+        </span>
+      </div>
+
+      <div class="skill-row">
+        <span class="skill-perm"><span class="rwx">rwx</span>r--r--</span>
+        <span class="skill-name">
+          <span class="title">Linux</span>
+          <span class="desc">Working knowledge of the shell and system</span>
+        </span>
+        <span class="skill-bar-wrap">
+          <span class="skill-bar"><i style="--pct:65%;"></i></span>
+          <span class="skill-pct">65%</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- UPCOMING SKILL -->
+  <div class="section">
+    <div class="section-head">
+      <span class="path">~/skills$</span>
+      <h2>apt install --upcoming</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="install-card">
+      <div class="install-top">
+        <span class="install-label"><span class="pulse"></span>IN PROGRESS</span>
+        <span class="install-pct">37% complete</span>
+      </div>
+      <div class="install-title">Cybersecurity Expert</div>
+      <div class="install-desc">
+        Next target on the roadmap: going from system-level fluency to full-blown security expertise —
+        threat detection, penetration testing, and hardening systems against attack.
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="install-meta">
+        <span>fetching packages: pentest-basics, network-defense, threat-intel</span>
+        <span>ETA: in training</span>
+      </div>
+      <div class="modules">
+        <span class="module-chip active">● in progress</span>
+        <span class="module-chip">network security</span>
+        <span class="module-chip">ethical hacking</span>
+        <span class="module-chip">threat analysis</span>
+        <span class="module-chip">system hardening</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="prompt">guest@system</span>:~$ echo "thanks for stopping by, come back anytime"<span class="caret"></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
