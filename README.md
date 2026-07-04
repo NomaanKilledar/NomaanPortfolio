@@ -1,4 +1,3 @@
-# OnmiNomaan-Portfolio
 # Nomaan Killedar — Portfolio
 
 A dark, terminal-inspired personal portfolio built with pure HTML/CSS/JS — no frameworks, no dependencies.
@@ -13,4 +12,4 @@ A dark, terminal-inspired personal portfolio built with pure HTML/CSS/JS — no 
 HTML5 · CSS3 · Vanilla JS · JetBrains Mono & Inter (Google Fonts)
 
 ## Live Demo
-[View Portfolio](#nomaan-portfolio.html) <!--nomaan-portfolio.html-->
+[View Portfolio](#) <!-- add your GitHub Pages link here -->
