@@ -52,6 +52,83 @@
     z-index:2;
   }
 
+  /* ---------- TOP NAVBAR ---------- */
+  body{ padding-top:86px; }
+  .navbar{
+    position:fixed; top:18px; left:50%; transform:translateX(-50%);
+    z-index:100;
+    width:min(920px, calc(100% - 32px));
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+    background:rgba(14,19,26,0.82);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:9px 9px 9px 20px;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 20px 40px -18px rgba(0,0,0,0.65), 0 0 0 1px rgba(77,243,255,0.04);
+  }
+  .nav-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:13px; letter-spacing:0.03em;
+    color:var(--text);
+    display:flex; align-items:center; gap:8px;
+    white-space:nowrap;
+    text-decoration:none;
+  }
+  .nav-logo .logo-icon{ color:var(--cyan); }
+  .nav-links{ display:flex; gap:2px; }
+  .nav-link{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    text-decoration:none;
+    padding:8px 15px;
+    border-radius:999px;
+    transition:color 0.2s ease, background 0.2s ease;
+    background:none;
+    border:none;
+    cursor:pointer;
+  }
+  .nav-link:hover{ color:var(--cyan); background:rgba(77,243,255,0.07); }
+  .nav-status{
+    display:flex; align-items:center; gap:7px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--text);
+    background:#141b23;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:8px 15px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .status-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:#28c840;
+    box-shadow:0 0 0 0 rgba(40,200,64,0.5);
+    animation:pulse-status 1.6s infinite;
+  }
+  @keyframes pulse-status{
+    0%{ box-shadow:0 0 0 0 rgba(40,200,64,0.5); }
+    70%{ box-shadow:0 0 0 8px rgba(40,200,64,0); }
+    100%{ box-shadow:0 0 0 0 rgba(40,200,64,0); }
+  }
+
+  #about, #upcoming, #projects, #connect{ scroll-margin-top:104px; }
+
+  @media (max-width:640px){
+    .navbar{ width:calc(100% - 20px); top:12px; }
+    .nav-inner{ padding:8px 8px 8px 14px; gap:8px; }
+    .nav-logo{ font-size:11.5px; }
+    .nav-link{ font-size:11.5px; padding:7px 10px; }
+    .nav-status span:last-child{ display:none; }
+    .nav-status{ padding:8px; }
+    body{ padding-top:76px; }
+  }
+
   /* ---------- NAV / PATH BAR ---------- */
   .pathbar{
     display:flex; align-items:center; gap:10px;
@@ -438,6 +515,19 @@
 </head>
 <body>
 
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#about" class="nav-logo"><span class="logo-icon">&lt;/&gt;</span> NOMAAN KILLEDAR</a>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">about</a>
+      <a href="#upcoming" class="nav-link">upcoming</a>
+      <a href="#projects" class="nav-link">projects</a>
+      <a href="#connect" class="nav-link">connect</a>
+    </div>
+    <div class="nav-status"><span class="status-dot"></span><span>available</span></div>
+  </div>
+</nav>
+
 <div class="wrap">
 
   <div class="pathbar">
@@ -456,17 +546,30 @@
       <div><span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span> <span class="cmd">whoami</span></div>
       <div class="whoami-out fade-in" style="animation-delay:0.3s;">
         <div class="name-line">Nomaan Killedar</div>
-        <div class="role-line">Coder <span class="tag">//</span> Windows System Administration <span class="tag">//</span> Linux-Literate Builder</div>
+        <div class="role-line">Coder <span class="tag">//</span> Windows Systems Master <span class="tag">//</span> Linux-Literate Builder</div>
       </div>
       <div class="fade-in" style="animation-delay:0.7s; margin-top:22px;">
-        <span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span> <span class="cmd">cat mission.txt</span>
-      </div>
-      <div class="fade-in" style="animation-delay:1s; color:var(--muted); margin-top:6px; max-width:560px;">
-        Building things with Python and the web — comfortable driving Windows deep under the hood,
-        and fluent enough in Linux to make it obey. Currently arming up for the cybersecurity frontier.
-      </div>
-      <div class="fade-in" style="animation-delay:1.3s; margin-top:22px;">
         <span class="prompt">guest<span class="sep">@</span>system</span><span class="sep">:~$</span><span class="caret"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about" class="section">
+    <div class="section-head">
+      <span class="path">~/about$</span>
+      <h2>cat about.txt</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="install-card" style="border-color:var(--line);">
+      <div class="install-desc" style="max-width:100%; font-size:15px; color:var(--text); line-height:1.85;">
+        I'm a self-driven builder who works comfortably across the stack — writing Python for logic
+        and automation, shaping clean HTML, and shipping full websites end-to-end. I've spent years
+        mastering Windows systems at a deep, technical level and I navigate Linux environments with
+        confidence. Right now I'm channeling that same discipline into cybersecurity, aiming to
+        understand systems well enough to defend them, not just build them. Whether it's code,
+        systems, or competition, I bring the same focus: learn it properly, then master it.
       </div>
     </div>
   </div>
@@ -519,7 +622,7 @@
       <div class="skill-row">
         <span class="skill-perm"><span class="rwx">rwx</span>rwxr-x</span>
         <span class="skill-name">
-          <span class="title">Windows System Administration</span>
+          <span class="title">Windows Systems</span>
           <span class="desc">Master-level command of the OS internals</span>
         </span>
       </div>
@@ -536,7 +639,7 @@
   </div>
 
   <!-- UPCOMING SKILL -->
-  <div class="section">
+  <div id="upcoming" class="section">
     <div class="section-head">
       <span class="path">~/skills$</span>
       <h2>apt install --upcoming</h2>
@@ -571,7 +674,7 @@
   </div>
 
   <!-- PROJECTS -->
-  <div class="section">
+  <div id="projects" class="section">
     <div class="section-head">
       <span class="path">~/projects$</span>
       <h2>ls ./projects</h2>
@@ -589,7 +692,7 @@
   </div>
 
   <!-- SOCIALS -->
-  <div class="section">
+  <div id="connect" class="section">
     <div class="section-head">
       <span class="path">~/socials$</span>
       <h2>cat ./connect.txt</h2>
