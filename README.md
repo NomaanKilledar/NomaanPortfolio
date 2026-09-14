@@ -1,33 +1,25 @@
 # Nomaan Killedar — Portfolio
 
-A dark, terminal-inspired personal portfolio built with pure HTML/CSS/JS — no frameworks, no dependencies.
+A dark, hacker-inspired personal portfolio with a live animated Matrix-style background, glassmorphic navigation, and smooth-scrolling sections. Built with pure HTML/CSS/JS — no frameworks, no dependencies.
 
 ## Features
-- 🖥️ Terminal-style hero with typed `whoami` intro
-- 📂 Skills displayed as a Unix `ls -la` file listing
-- 📦 "Currently learning" section styled as a live package install (Cybersecurity — in progress)
-- 🗂️ Projects section styled as an empty directory — more coming soon
-- 🔗 Social links (GitHub, TryHackMe, Email) styled as connectable cards
-- 🎨 Dark theme with cyan/magenta neon accents, fully responsive
+- 🟢 Animated Matrix-style falling code background (canvas-based)
+- 🧊 Glassmorphic floating navbar with smooth-scroll links
+- 🖥️ Centered hero intro with name and tagline
+- 📟 Immersive terminal-style About section with a live scan-line animation
+- 🛠️ Skills shown as a horizontal slider — swipe or use arrow controls
+- 🗂️ Projects shown as a matching slider, featuring real shipped work
+- 🔗 Connect section with GitHub, TryHackMe, and Email — all clickable
+- 🎨 Cyan/green neon accents on a pure black backdrop, fully responsive
 
-## Skills
-- Python
-- Web Development
-- HTML
-- Coding
-- Windows System Administration
-- Linux
-
-## Currently Learning
-- Cybersecurity (in progress)
-
-## Connect
-- [GitHub](https://github.com/NomaanKilledar)
-- [TryHackMe](https://tryhackme.com/p/NomaanKilledar)
-- Email: nomaankilledar08@gmail.com
+## Sections
+- **About** — who I am and what I work with
+- **Skills** — Web Development, Windows System Administration & Troubleshooting, Cybersecurity, Linux, CLI Tools Development, Infrastructure Setup, Maintenance & Support
+- **Projects** — [NEXUS](https://github.com/NomaanKilledar/NEXUS) (Network & Endpoint Security Utility Suite), more in progress
+- **Connect** — GitHub, TryHackMe, Email
 
 ## Tech
-HTML5 · CSS3 · Vanilla JS · JetBrains Mono & Inter (Google Fonts)
+HTML5 · CSS3 · Vanilla JS (Canvas API for the background animation) · JetBrains Mono & Space Grotesk (Google Fonts)
 
 ## Live Demo
 [View Portfolio](https://nomaankilledar.github.io/NomaanPortfolio/)
