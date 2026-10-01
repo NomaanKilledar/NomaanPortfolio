@@ -22,4 +22,4 @@ A dark, hacker-inspired personal portfolio with a live animated Matrix-style bac
 HTML5 · CSS3 · Vanilla JS (Canvas API for the background animation) · JetBrains Mono & Space Grotesk (Google Fonts)
 
 ## Live Demo
-[View Portfolio](https://nomaankilledar.github.io/NomaanPortfolio/)
+[View Portfolio](https://nomaankilledar.netlify.app/)
